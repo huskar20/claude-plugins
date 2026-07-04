@@ -29,15 +29,18 @@ work-authorization answers.
 
 ## Quick start
 
-1. Install the plugin, open a folder you want to use as your job-search
-   workspace, and say **"set up career hunter"**.
-2. Answer the interview (role, titles, salary, location, work auth, EEO
-   defaults, submission mode). Setup creates:
+1. Install the plugin (see the marketplace README for terminal vs. desktop steps),
+   then **restart Claude Code / reload the desktop app** so the skills register.
+2. Open or create a folder to use as your job-search workspace and say
+   **"set up career hunter"** — always run setup **first**; the other skills depend
+   on the profile and config it creates and will redirect you here if they're missing.
+3. Answer the interview (role, titles, salary, location, work auth, EEO defaults,
+   submission mode). Setup creates:
    - `career-profile.md` — your answers; edit it by hand any time
    - `career-hunter-state/` — config and run state
    - a `Job_Search_Tracker` Google Sheet with **Applications, Interview Notes,
      Contacts, and Dashboard** tabs
-3. Say **"run the job hunt"** to apply, **"sync my job search"** to reconcile
+4. Say **"run the job hunt"** to apply, **"sync my job search"** to reconcile
    Gmail with the tracker — or let setup schedule both.
 
 ## Safety model

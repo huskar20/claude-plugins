@@ -3,25 +3,46 @@
 A community marketplace of [Claude](https://claude.com) plugins — skills, agents,
 and automations you can install into Claude Code or the Claude desktop app.
 
-## Install the marketplace
+## Installing
+
+Career Hunter installs like any Claude plugin. There are two environments:
+
+### Claude Code (terminal)
+
+Run these in an **interactive** `claude` session — the `/plugin` commands aren't
+available in non-interactive or embedded runs:
 
 ```
 /plugin marketplace add huskar20/huskar20-plugins
-```
-
-Then browse and install:
-
-```
 /plugin install career-hunter
 ```
 
-Update later with `/plugin marketplace update huskar20-plugins`.
+Then **restart Claude Code** (start a fresh session) so the plugin's skills
+register. Update later with `/plugin marketplace update huskar20-plugins`.
+
+### Claude desktop app
+
+Add the marketplace and install `career-hunter` from the app's **plugin /
+marketplace settings**, pointing it at the `huskar20/huskar20-plugins` repo. If
+your desktop version accepts the `/plugin` slash commands in chat, the two commands
+above work there too. After installing, **reload the app** so the skills load.
+(The exact menu location varies by app version.)
+
+### First thing after installing (both environments)
+
+Open or create a folder to use as your job-search workspace, then say:
+
+> **set up career hunter**
+
+This one-time onboarding interviews you and builds your profile + tracker. **Run it
+before** "run the job hunt" or "sync my job search" — those skills depend on the
+profile and config it creates, and will send you back to setup if they're missing.
 
 ## Available plugins
 
 | Plugin | What it does | Version |
 |---|---|---|
-| **career-hunter** | End-to-end job-search automation: guided onboarding builds your profile + a Google Sheets tracker, then auto-apply and Gmail-sync skills hunt roles, submit applications, keep the tracker current, and add confirmed interviews to your calendar. | 0.1.0 |
+| **career-hunter** | End-to-end job-search automation: guided onboarding builds your profile + a Google Sheets tracker, then auto-apply and Gmail-sync skills hunt roles, submit applications, keep the tracker current, and add confirmed interviews to your calendar. | 0.2.0 |
 
 Each plugin has its own README under [`plugins/`](./plugins/) with full details
 and requirements.
