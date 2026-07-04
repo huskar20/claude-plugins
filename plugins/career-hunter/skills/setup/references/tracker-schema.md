@@ -44,17 +44,66 @@ table below is the layout as created by setup; treat it as a hint, not gospel.
 - The Notes column is scannable history: append with ` | ` separators, keep each
   entry short and dated.
 
-## Creating the sheet (setup skill)
+## Dropdowns (data validation)
 
-1. `https://sheets.new` in Chrome → rename file `Job_Search_Tracker_<year>`.
-2. Rename tab 1 to `Applications`.
-3. Type the 20 headers into row 2 (Name Box → `A2`, then value-Tab-value-Tab…).
-4. Optionally add dropdowns: select column M data range → Data → Data validation →
-   list the Stage values; same for column N with Status values. Skip if the UI
-   is uncooperative — plain text works.
-5. Create the three supporting tabs below. The apply/sync skills only ever write
-   to `Applications`; these exist so a friend's sheet mirrors the reference
-   layout and gives them a place for manual notes. Use simple starter headers.
+Three columns on the Applications tab are dropdowns (Data → Data validation,
+criteria = **Dropdown**). Apply each to the whole data range of its column
+(e.g. `F3:F1000`, `M3:M1000`, `N3:N1000` — the reference sheet has them split
+into smaller ranges only because the owner extended them over time; one range
+per column is cleaner). A value typed that isn't in the list still commits, with
+a soft red flag — that's expected (e.g. `Recruiter Outreach` in Status).
+
+| Column | Field | Options | Chip color |
+|---|---|---|---|
+| F | Mode | Remote, Hybrid, Onsite | none (default gray) |
+| M | Stage | Applied, HR Call, HM Call, Technical Screen, Final Round, Offer, Hired, Closed | none (default gray) |
+| N | Status | Active, Rejected, Offer, Completed, Withdrawn, Interview Scheduling, Applied | **colored — see below** |
+
+**Status chip colors** (set per option in the dropdown editor — this is what
+paints the Status cells; it is NOT conditional formatting):
+
+| Option | Color |
+|---|---|
+| Active | green |
+| Interview Scheduling | green |
+| Rejected | dark red |
+| Withdrawn | dark maroon |
+| Offer | purple |
+| Completed | dark gray |
+| Applied | light gray (default) |
+
+(`Recruiter Outreach` is used off-list and shows with the soft red flag.)
+
+## Colors & formatting (manual cell fills — no conditional formatting)
+
+All coloring below is plain cell fill / text formatting, applied once at setup.
+Exact hex isn't critical; match the semantic color.
+
+- **Row 1 title banner (every tab):** dark navy fill, **white bold centered** title
+  (the tab's name, e.g. `JOB SEARCH DASHBOARD`, `RECRUITER & CONTACT DIRECTORY`).
+- **Row 2 header row (all data tabs):** dark navy fill, white bold text.
+- **Applications — column C (Interview Date):** light green fill on the header and
+  its cells, so interview rows stand out at a glance.
+- **Status column (N):** colored via the dropdown chips above — no separate rule.
+
+### Dashboard tab formatting
+
+- **Row 1 banner:** dark navy, white bold `JOB SEARCH DASHBOARD`.
+- **Summary cards — row 3 header cells, each a distinct fill:** Total Applied =
+  navy, Active = green, Rejected = red, Offers = amber/gold, In Final Round =
+  blue, Stalled = orange. Row 4 (the formula values) sits on light gray with large
+  bold numbers.
+- **Row 6 banner:** dark navy, white bold `PIPELINE FUNNEL`.
+- **Funnel rows 7–13:** bold stage labels in column B on light gray, counts in
+  column C.
+
+## Creating the sheet
+
+The full create-then-populate procedure is in this skill's `SKILL.md` (**Step 4**):
+the Google Drive MCP `create_file` makes the spreadsheet, then Chrome populates the
+tabs, the dropdowns + Status chip colors above, the fills above, the supporting-tab
+layouts below, and the Dashboard formulas below. The apply/sync skills only ever
+write to `Applications`; the three supporting tabs are for the user's manual use.
 
 ## Supporting tabs (exact layout, mirrored from the reference tracker)
 

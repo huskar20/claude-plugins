@@ -115,12 +115,18 @@ Full per-tab headers and the Dashboard formulas are in `references/tracker-schem
    `https://docs.google.com/spreadsheets/d/<id>/edit`, and store both in
    `config.json` **now**, before populating — so a later failure still leaves a
    usable, recorded sheet.
-2. **Populate the structure — Chrome:** open the edit URL and, per the schema,
-   rename the default tab to `Applications` (row-1 banner, row-2 headers via the
-   Name Box method in `../sync/references/sheet-writing.md`), add the Stage/Status
-   dropdowns, then add the **Interview Notes**, **Contacts**, and **Dashboard**
-   tabs — entering the Dashboard's `COUNTA`/`COUNTIF` formulas exactly as listed so
-   it stays live. The apply/sync skills only ever write to `Applications`.
+2. **Populate the structure — Chrome**, all per `references/tracker-schema.md`:
+   - rename the default tab to `Applications`; add its row-1 navy banner and row-2
+     white-bold headers (Name Box method in `../sync/references/sheet-writing.md`),
+     and the light-green fill on column C (Interview Date);
+   - add the **Mode (F)**, **Stage (M)**, and **Status (N)** dropdowns, and set the
+     **Status option chip colors** (Active/Interview Scheduling green, Rejected red,
+     Withdrawn maroon, Offer purple, Completed gray, Applied gray) — that coloring
+     comes from the dropdown, not conditional formatting;
+   - add the **Interview Notes**, **Contacts**, and **Dashboard** tabs with their
+     banners/headers; on Dashboard, apply the per-card fill colors and enter the
+     `COUNTA`/`COUNTIF` formulas exactly as listed so it stays live.
+   The apply/sync skills only ever write to `Applications`.
 3. **If Chrome isn't connected:** the spreadsheet still exists (the MCP made it),
    just empty — record it and flag in the summary that its tabs/headers/Dashboard
    need populating in Chrome before apply/sync can use it. (Optional shortcut to at
