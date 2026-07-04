@@ -13,15 +13,10 @@ on every path. Contributors fork, branch, and open PRs per
 
 ## One-time setup (do this right after pushing to GitHub)
 
-### 1. Fill in CODEOWNERS
+### 1. CODEOWNERS — already set
 
-Replace the placeholder with your GitHub handle so review requests route to you:
-
-```bash
-cd ~/Desktop/claude-plugins
-sed -i '' 's/YOUR_GITHUB_USERNAME/your-handle/' .github/CODEOWNERS
-git add .github/CODEOWNERS && git commit -m "Set code owner" && git push
-```
+[`.github/CODEOWNERS`](.github/CODEOWNERS) already routes every review to
+`@huskar20`. If you ever transfer the repo, update that handle.
 
 ### 2. Protect the `main` branch
 
@@ -40,7 +35,7 @@ Branch protection rules), targeting `main`:
 **Or via GitHub CLI** once authenticated:
 
 ```bash
-gh api -X PUT repos/YOUR_USERNAME/claude-plugins/branches/main/protection \
+gh api -X PUT repos/huskar20/claude-plugins/branches/main/protection \
   --input - <<'JSON'
 {
   "required_status_checks": { "strict": true, "contexts": ["validate"] },

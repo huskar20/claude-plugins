@@ -3,5 +3,4 @@
 # request. Combined with branch protection ("Require review from Code Owners"),
 # nothing merges to `main` without their approval. See MAINTAINERS.md.
 
-# Replace YOUR_GITHUB_USERNAME with the repo owner's GitHub handle.
-* @YOUR_GITHUB_USERNAME
+* @huskar20

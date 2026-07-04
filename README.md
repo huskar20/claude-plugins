@@ -5,10 +5,8 @@ and automations you can install into Claude Code or the Claude desktop app.
 
 ## Install the marketplace
 
-Replace `YOUR_GITHUB_USERNAME` with the account this repo lives under.
-
 ```
-/plugin marketplace add YOUR_GITHUB_USERNAME/claude-plugins
+/plugin marketplace add huskar20/claude-plugins
 ```
 
 Then browse and install:
