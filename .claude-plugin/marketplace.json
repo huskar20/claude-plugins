@@ -12,7 +12,7 @@
       "name": "career-hunter",
       "source": "./plugins/career-hunter",
       "description": "End-to-end job search automation: guided onboarding builds your personal application profile and a multi-tab Google Sheets tracker, then auto-apply and Gmail-sync skills hunt roles, submit applications, keep the tracker current, and add confirmed interviews to your Google Calendar.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": { "name": "Huseyin Karaarslan" },
       "category": "productivity",
       "keywords": ["job-search", "applications", "recruiting", "automation", "tracker"]

@@ -26,12 +26,16 @@ later. A plugin cannot gate its own installation on connectors — this check is
 the real gate, so do it thoroughly and stop if a required piece is absent.
 
 1. **Gmail connector** — needed by sync (and apply, for email verification codes).
-2. **Google Drive connector** — needed to read the tracker for dedupe.
+2. **Google Drive connector** — **creates** the tracker spreadsheet file
+   (`create_file`) and **reads** it for dedupe in apply/sync.
 3. **Google Calendar connector** — needed so sync can create an event when it
    detects a confirmed interview. If it's missing, say so; the user can still
    proceed (sync will fall back to notification-only) but flag it as a TODO.
-4. **Claude-in-Chrome extension, connected** — `list_connected_browsers`; all sheet
-   writes and application form-filling happen in the user's own Chrome session.
+4. **Claude-in-Chrome extension, connected** — `list_connected_browsers`;
+   **populates** the new tracker's tab structure/dropdowns/formulas and **writes**
+   application rows, and fills application forms. All in the user's own Chrome
+   session. (The Drive MCP makes the file; there is no Sheets-cell MCP, so the
+   in-sheet structure is built in Chrome.)
 5. **Resume file** — ask the user to place their resume PDF in the working folder
    (or a subfolder) and confirm its path. Record it in config. If they don't have
    it ready, continue setup and leave a TODO in the summary.
@@ -98,23 +102,31 @@ Tell the user this file is theirs to edit by hand any time.
 
 Ask: create a new Google Sheets tracker, or connect an existing one (paste URL/ID)?
 
-**Creating new (via Chrome):** create all four tabs so the sheet mirrors the
-reference layout. Full per-tab headers are in `references/tracker-schema.md`.
-1. Navigate to `https://sheets.new`. Rename the file `Job_Search_Tracker_<year>`.
-2. Rename the first tab to `Applications`. Write its header per the schema: row 1
-   left as a title banner, **row 2 = the column headers**, data starts at row 3.
-   Use the Name Box method from `../sync/references/sheet-writing.md`.
-3. Set up the Stage and Status dropdowns on the Applications tab (Data → Data
-   validation) if straightforward; if the UI fights you, skip — plain text values
-   work fine and the schema documents the expected values.
-4. Add the three supporting tabs (the `+` at the bottom-left), recreating the
-   exact layouts in the schema: **Interview Notes**, **Contacts**, **Dashboard**.
-   Interview Notes and Contacts are just banner + header rows for the user's own
-   manual use. **Dashboard** is a live summary — enter its `COUNTA`/`COUNTIF`
-   formulas exactly as listed so it auto-updates as applications are logged. The
-   apply/sync skills only ever write to `Applications`.
-5. Extract the spreadsheet ID from the URL (`/spreadsheets/d/<ID>/`) and store it
-   in `config.json` together with the edit URL.
+**Creating new:** the Google Drive MCP creates the spreadsheet **file**; Chrome
+then populates its structure. (There is no Sheets-cell MCP, so the multi-tab
+layout, dropdowns, and Dashboard formulas are filled in via Chrome — but the file
+itself is made by the MCP, which is reliable and doesn't depend on the browser.)
+Full per-tab headers and the Dashboard formulas are in `references/tracker-schema.md`.
+
+1. **Create the file — Google Drive MCP `create_file`:** `title:
+   "Job_Search_Tracker_<year>"`, `contentMimeType:
+   application/vnd.google-apps.spreadsheet` (no content needed — returns a new blank
+   spreadsheet). Capture the returned file **id**, build the edit URL
+   `https://docs.google.com/spreadsheets/d/<id>/edit`, and store both in
+   `config.json` **now**, before populating — so a later failure still leaves a
+   usable, recorded sheet.
+2. **Populate the structure — Chrome:** open the edit URL and, per the schema,
+   rename the default tab to `Applications` (row-1 banner, row-2 headers via the
+   Name Box method in `../sync/references/sheet-writing.md`), add the Stage/Status
+   dropdowns, then add the **Interview Notes**, **Contacts**, and **Dashboard**
+   tabs — entering the Dashboard's `COUNTA`/`COUNTIF` formulas exactly as listed so
+   it stays live. The apply/sync skills only ever write to `Applications`.
+3. **If Chrome isn't connected:** the spreadsheet still exists (the MCP made it),
+   just empty — record it and flag in the summary that its tabs/headers/Dashboard
+   need populating in Chrome before apply/sync can use it. (Optional shortcut to at
+   least seed the `Applications` header row without Chrome: create the file via
+   `create_file` with the 20 column headers as `textContent` CSV and
+   `contentMimeType: text/csv`, which converts into a single populated sheet.)
 
 **Connecting existing:** read the sheet via the Drive connector, read its header
 row, and record the ID. If its columns differ from the schema, record the actual
