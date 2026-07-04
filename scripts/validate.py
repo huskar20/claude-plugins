@@ -77,9 +77,15 @@ def main() -> int:
     mkt_path = os.path.join(ROOT, ".claude-plugin", "marketplace.json")
     mkt = load_json(mkt_path)
     registered: dict[str, dict] = {}
+    # Claude Code rejects marketplace/plugin names that impersonate Anthropic/Claude.
+    reserved = re.compile(r"claude|anthropic", re.IGNORECASE)
     if mkt is not None:
-        if not mkt.get("name"):
+        mname = mkt.get("name")
+        if not mname:
             err("marketplace.json: missing 'name'")
+        elif reserved.search(mname):
+            err(f"marketplace.json: name '{mname}' must not contain 'claude' or 'anthropic' "
+                "(Claude Code blocks it as impersonating an official marketplace)")
         plugins = mkt.get("plugins")
         if not isinstance(plugins, list) or not plugins:
             err("marketplace.json: 'plugins' must be a non-empty array")
@@ -88,6 +94,8 @@ def main() -> int:
             name = entry.get("name", "")
             if not KEBAB.match(name):
                 err(f"marketplace.json: plugin name '{name}' is not kebab-case")
+            if reserved.search(name):
+                err(f"marketplace.json: plugin name '{name}' must not contain 'claude' or 'anthropic'")
             src = entry.get("source", "")
             if not isinstance(src, str) or not src.startswith("./plugins/"):
                 err(f"marketplace.json: plugin '{name}' source should be './plugins/<name>' (got {src!r})")

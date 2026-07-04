@@ -15,7 +15,10 @@ in `marketplace.json`.
 
 1. **One plugin, one directory** under `plugins/<plugin-name>/`. `<plugin-name>`
    is kebab-case (lowercase letters, numbers, hyphens) and must match the `name`
-   in that plugin's `plugin.json` and its entry in `marketplace.json`.
+   in that plugin's `plugin.json` and its entry in `marketplace.json`. Names must
+   **not contain "claude" or "anthropic"** — Claude Code rejects them as
+   impersonating an official marketplace. (The GitHub repo name may contain
+   "claude"; only the `name` fields inside the manifests are checked.)
 2. **Never commit personal data or secrets.** No real names (beyond an author
    attribution the author consents to), emails, phone numbers, API keys, tokens,
    spreadsheet/document IDs, file paths outside the repo, or customer data. A

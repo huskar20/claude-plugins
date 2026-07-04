@@ -15,7 +15,7 @@ Then browse and install:
 /plugin install career-hunter
 ```
 
-Update later with `/plugin marketplace update claude-plugins`.
+Update later with `/plugin marketplace update huskar20-plugins`.
 
 ## Available plugins
 
